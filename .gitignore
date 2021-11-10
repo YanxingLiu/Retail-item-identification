@@ -113,3 +113,6 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+#BDCI
+RP2K_rp2k_dataset/
