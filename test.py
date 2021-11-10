@@ -10,11 +10,15 @@ train_dataset = ds.MindDataset(TRAIN_DATA_FILE)
 TEST_DATA_FILE = ["RP2K_rp2k_dataset/test/RP2K_test.mindrecord"]
 test_dataset = ds.MindDataset(TEST_DATA_FILE)
 
-for data in test_dataset.create_dict_iterator(output_numpy=True):
-    image = BytesIO(data['data'])
-    img = Image.open(image)
-    img.show()
+train_it = train_dataset.create_dict_iterator(output_numpy=True)
+data = next(train_it)
 
+img_bytes = data['data']
+img_path = data['file_name']
+img_label = data['label']
+
+image = Image.open(BytesIO(img_bytes))
+image.show()
 
 
 
