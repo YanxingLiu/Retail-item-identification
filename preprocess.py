@@ -6,7 +6,7 @@ decode_op = CV.Decode(rgb=True)  # jpeg解码
 resize_op = CV.Resize([224, 224], Inter.BICUBIC)  # 图像resize,resize尺寸可以在这里修改
 
 
-def pre_process(dataset, bs=2):
+def preprocess(dataset, bs=2):
     """
     :brief: process a dataset ,include [decode, resize,shuffle,batch]
     :param dataset:  dataset to be processed
