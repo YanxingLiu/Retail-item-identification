@@ -116,4 +116,5 @@ dmypy.json
 
 #BDCI
 RP2K_rp2k_dataset/
-.idea
+.idea/
+cache/
