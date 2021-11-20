@@ -21,6 +21,8 @@ import argparse
 from pprint import pprint, pformat
 import yaml
 
+_config_path = "./config/resnet50_cifar10_config.yaml"
+
 class Config:
     """
     Configuration namespace. Convert dictionary to members.
@@ -39,7 +41,7 @@ class Config:
         return self.__str__()
 
 
-def parse_cli_to_yaml(parser, cfg, helper=None, choices=None, cfg_path="default_config.yaml"):
+def parse_cli_to_yaml(parser, cfg, helper=None, choices=None, cfg_path="resnet50_cifar10_config.yaml"):
     """
     Parse command line arguments to the configuration according to the default yaml.
 
@@ -88,7 +90,7 @@ def parse_yaml(yaml_path):
             elif len(cfgs) == 3:
                 cfg, cfg_helper, cfg_choices = cfgs
             else:
-                raise ValueError("At most 3 docs (config, description for help, choices) are supported in config yaml")
+                raise ValueError("At most 3 docs (config description for help, choices) are supported in config yaml")
             print(cfg_helper)
         except:
             raise ValueError("Failed to parse yaml")
@@ -115,8 +117,8 @@ def get_config():
     """
     parser = argparse.ArgumentParser(description="default name", add_help=False)
     current_dir = os.path.dirname(os.path.abspath(__file__))
-    parser.add_argument("--config_path", type=str, default=os.path.join(current_dir, "../configs/default_config.yaml"),
-                        help="Config file path")
+    parser.add_argument("--config_path", type=str, default=os.path.join(current_dir, \
+                                                                        "../../config/resnet18_rp2k_config_gpu.yaml"), help="Config file path")
     path_args, _ = parser.parse_known_args()
     default, helper, choices = parse_yaml(path_args.config_path)
     args = parse_cli_to_yaml(parser=parser, cfg=default, helper=helper, choices=choices, cfg_path=path_args.config_path)
