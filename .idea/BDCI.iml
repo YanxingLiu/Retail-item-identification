@@ -2,7 +2,7 @@
 <module type="PYTHON_MODULE" version="4">
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$" />
-    <orderEntry type="jdk" jdkName="Python 3.9 (MindSpore)" jdkType="Python SDK" />
+    <orderEntry type="jdk" jdkName="Remote Python 3.9.0 (sftp://yuan@120.53.123.78:22/home/yuan/miniconda3/envs/MindSpore/bin/python)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
 </module>
