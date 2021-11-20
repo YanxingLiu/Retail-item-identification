@@ -22,6 +22,7 @@
         ├── RP2K_train.mindrecord
         └── RP2K_train.mindrecord.db
 转换过程有一点长，请耐心等待
+Tips:如果invalid path错误请创建 ./RP2K_rp2k_dataset/train 以及 ./RP2K_rp2k_dataset/test文件夹
 """
 
 from io import BytesIO
