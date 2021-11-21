@@ -1,1 +1,1 @@
-python eval.py --config_path config/resnet101_rp2k_config_gpu.yaml
+python eval.py --config_path config/resnet50_rp2k_config_gpu.yaml
