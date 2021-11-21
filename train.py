@@ -297,7 +297,7 @@ def load_pre_trained_checkpoint():
 def train_net():
     target = config.device_target
     set_parameter()
-    # ckpt_param_dict = load_pre_trained_checkpoint()
+    ckpt_param_dict = load_pre_trained_checkpoint()
     dataset = create_dataset(dataset_path=os.path.join(config.data_path,'train/RP2K_train.mindrecord'), do_train=True, repeat_num=1,
                                  batch_size=config.batch_size, train_image_size=config.train_image_size,
                                  eval_image_size=config.eval_image_size, target=target,
@@ -308,7 +308,7 @@ def train_net():
     if config.parameter_server:
         net.set_param_ps()
 
-    # init_weight(net=net, param_dict=ckpt_param_dict)
+    init_weight(net=net, param_dict=ckpt_param_dict)
     lr = Tensor(init_lr(step_size=step_size))
     group_params = init_group_params(net)
     opt = Momentum(group_params, lr, config.momentum, loss_scale=config.loss_scale)
