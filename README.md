@@ -58,7 +58,7 @@ chmod 777 /cache
 ## 3.验证模型
 ### 3.1 GPU环境
 可直接运行:
-sh scripts/run_train_eval.sh  
+sh scripts/run_eval_gpu.sh  
 代码会自动到/cache//cache/train/checkpoint目录下寻找最佳ckpt，如果需要自定义ckpt路径，则需要指定对应config文件中的checkpoint_file_path参数。
 
 ### 3.2 Ascend环境
