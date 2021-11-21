@@ -62,7 +62,7 @@ def eval_net():
         context.set_context(device_id=device_id)
 
     # create dataset
-    dataset = create_dataset(dataset_path=config.eval_dataset_path, do_train=False, batch_size=config.batch_size,
+    dataset = create_dataset(dataset_path=os.path.join(config.eval_dataset_path,'test/RP2K_test.mindrecord'), do_train=False, batch_size=config.batch_size,
                              eval_image_size=config.eval_image_size,
                              target=target)
 

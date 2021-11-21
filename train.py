@@ -2,7 +2,6 @@
 # coding=utf-8
 import os
 import mindspore.dataset as ds
-from preprocess import preprocess
 import datetime
 import glob
 import os
@@ -88,7 +87,7 @@ if config.net_name in ("resnet18", "resnet34", "resnet50", "resnet152"):
         if config.mode_name == "GRAPH":
             from src.dataset import create_dataset5 as create_dataset
         else:
-            from src.dataset import create_dataset_5 as create_dataset
+            from src.dataset import create_dataset5 as create_dataset
 elif config.net_name == "resnet101":
     from src.resnet import resnet101 as resnet
     from src.dataset import create_dataset5 as create_dataset
@@ -245,16 +244,9 @@ def init_group_params(net):
 def run_eval(target, model, ckpt_save_dir, cb):
     """run_eval"""
     if config.run_eval:
-        # if config.eval_dataset_path is None or (not os.path.isdir(config.eval_dataset_path)):
-        #     raise ValueError("{} is not a existing path.".format(config.eval_dataset_path))
-        if config.enable_modelarts:
-            eval_dataset = create_dataset(dataset_path=os.path.join(config.data_url,'test/RP2K_test.mindrecord'), do_train=False,
-                                          batch_size=config.batch_size, train_image_size=config.train_image_size,
-                                          eval_image_size=config.eval_image_size,
-                                          target=target, enable_cache=config.enable_cache,
-                                          cache_session_id=config.cache_session_id)
-        else:
-            eval_dataset = create_dataset(dataset_path=config.eval_dataset_path, do_train=False,
+        if config.eval_dataset_path is None or (not os.path.isdir(config.eval_dataset_path)):
+            raise ValueError("{} is not a existing path.".format(config.eval_dataset_path))
+        eval_dataset = create_dataset(dataset_path=os.path.join(config.eval_dataset_path,'test/RP2K_test.mindrecord'), do_train=False,
                                           batch_size=config.batch_size, train_image_size=config.train_image_size,
                                           eval_image_size=config.eval_image_size,
                                           target=target, enable_cache=config.enable_cache,
@@ -307,16 +299,11 @@ def train_net():
     target = config.device_target
     set_parameter()
     # ckpt_param_dict = load_pre_trained_checkpoint()
-    if (config.enable_modelarts):
-        dataset = create_dataset(dataset_path=os.path.join(config.data_url,'train/RP2K_train.mindrecord'), do_train=True, repeat_num=1,
+    dataset = create_dataset(dataset_path=os.path.join(config.data_path,'train/RP2K_train.mindrecord'), do_train=True, repeat_num=1,
                                  batch_size=config.batch_size, train_image_size=config.train_image_size,
                                  eval_image_size=config.eval_image_size, target=target,
                                  distribute=config.run_distribute)
-    else:
-        dataset = create_dataset(dataset_path=config.data_path, do_train=True, repeat_num=1,
-                                 batch_size=config.batch_size, train_image_size=config.train_image_size,
-                                 eval_image_size=config.eval_image_size, target=target,
-                                 distribute=config.run_distribute)
+
     step_size = dataset.get_dataset_size()
     net = resnet(class_num=config.class_num)
     if config.parameter_server:
