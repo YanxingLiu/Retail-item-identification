@@ -7,7 +7,7 @@ checkpoint_url: ""
 # Path for local
 run_distribute: False
 enable_profiling: False
-data_path: "./cache/train/RP2K_train.mindrecord"
+data_path: "./RP2K_rp2k_dataset/train/RP2K_train.mindrecord"
 output_path: "/cache/train"
 load_path: "/cache/checkpoint_path/"
 device_target: "Ascend"
@@ -37,7 +37,7 @@ lars_epsilon: 0.0
 lars_coefficient: 0.001
 boost_mode: "O2"
 
-net_name: "resnet101"
+net_name: "resnet18"
 dataset: "rp2k"
 device_num: 1
 pre_trained: ""
@@ -60,10 +60,10 @@ eval_image_size: 224
 device_id: 0
 width: 224
 height: 224
-file_name: "resnet101"
+file_name: "resnet18"
 file_format: "MINDIR"
 ckpt_file: ""
-network_dataset: "resnet101_rp2k"
+network_dataset: "resnet18_cifar10"
 
 # Retrain options
 save_graphs: False

@@ -245,13 +245,20 @@ def init_group_params(net):
 def run_eval(target, model, ckpt_save_dir, cb):
     """run_eval"""
     if config.run_eval:
-        if config.eval_dataset_path is None or (not os.path.isdir(config.eval_dataset_path)):
-            raise ValueError("{} is not a existing path.".format(config.eval_dataset_path))
-        eval_dataset = create_dataset(dataset_path=os.path.join(config.data_url,'test/RP2K_test.mindrecord'), do_train=False,
-                                      batch_size=config.batch_size, train_image_size=config.train_image_size,
-                                      eval_image_size=config.eval_image_size,
-                                      target=target, enable_cache=config.enable_cache,
-                                      cache_session_id=config.cache_session_id)
+        # if config.eval_dataset_path is None or (not os.path.isdir(config.eval_dataset_path)):
+        #     raise ValueError("{} is not a existing path.".format(config.eval_dataset_path))
+        if config.enable_modelarts:
+            eval_dataset = create_dataset(dataset_path=os.path.join(config.data_url,'test/RP2K_test.mindrecord'), do_train=False,
+                                          batch_size=config.batch_size, train_image_size=config.train_image_size,
+                                          eval_image_size=config.eval_image_size,
+                                          target=target, enable_cache=config.enable_cache,
+                                          cache_session_id=config.cache_session_id)
+        else:
+            eval_dataset = create_dataset(dataset_path=config.eval_dataset_path, do_train=False,
+                                          batch_size=config.batch_size, train_image_size=config.train_image_size,
+                                          eval_image_size=config.eval_image_size,
+                                          target=target, enable_cache=config.enable_cache,
+                                          cache_session_id=config.cache_session_id)
         eval_param_dict = {"model": model, "dataset": eval_dataset, "metrics_name": "acc"}
         eval_cb = EvalCallBack(apply_eval, eval_param_dict, interval=config.eval_interval,
                                eval_start_epoch=config.eval_start_epoch, save_best_ckpt=config.save_best_ckpt,
@@ -276,7 +283,7 @@ def load_pre_trained_checkpoint():
     param_dict = None
     if config.pre_trained:
         if os.path.isdir(config.pre_trained):
-            ckpt_save_dir = os.path.join(config.output_path, config.checkpoint_path, "ckpt_0")
+            ckpt_save_dir = os.path.join(config.output_path, config.checkpoint_path)
             ckpt_pattern = os.path.join(ckpt_save_dir, "*.ckpt")
             ckpt_files = glob.glob(ckpt_pattern)
             if not ckpt_files:
@@ -295,24 +302,21 @@ def load_pre_trained_checkpoint():
             print(f"Invalid pre_trained {config.pre_trained} parameter.")
     return param_dict
 
-# def create_dataset():
-#     TRAIN_DATA_FILE = ["RP2K_rp2k_dataset/train/RP2K_train.mindrecord"]
-#     TEST_DATA_FILE = ["RP2K_rp2k_dataset/test/RP2K_test.mindrecord"]
-#     ds_train = ds.MindDataset(TRAIN_DATA_FILE)
-#     ds_test = ds.MindDataset(TEST_DATA_FILE)
-#     ds_train = preprocess(ds_train, bs=config.batch_size)
-#     ds_test = preprocess(ds_test, bs=config.batch_size)
-#     return ds_train,ds_test
-
 @moxing_wrapper()
 def train_net():
     target = config.device_target
     set_parameter()
     # ckpt_param_dict = load_pre_trained_checkpoint()
-    dataset = create_dataset(dataset_path=os.path.join(config.data_url,'train/RP2K_train.mindrecord'), do_train=True, repeat_num=1,
-                             batch_size=config.batch_size, train_image_size=config.train_image_size,
-                             eval_image_size=config.eval_image_size, target=target,
-                             distribute=config.run_distribute)
+    if (config.enable_modelarts):
+        dataset = create_dataset(dataset_path=os.path.join(config.data_url,'train/RP2K_train.mindrecord'), do_train=True, repeat_num=1,
+                                 batch_size=config.batch_size, train_image_size=config.train_image_size,
+                                 eval_image_size=config.eval_image_size, target=target,
+                                 distribute=config.run_distribute)
+    else:
+        dataset = create_dataset(dataset_path=config.data_path, do_train=True, repeat_num=1,
+                                 batch_size=config.batch_size, train_image_size=config.train_image_size,
+                                 eval_image_size=config.eval_image_size, target=target,
+                                 distribute=config.run_distribute)
     step_size = dataset.get_dataset_size()
     net = resnet(class_num=config.class_num)
     if config.parameter_server:

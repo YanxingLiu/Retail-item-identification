@@ -1,5 +1,5 @@
 # Builtin Configurations(DO NOT CHANGE THESE CONFIGURATIONS unless you know exactly what you are doing)
-enable_modelarts: True
+enable_modelarts: False
 # Url for modelarts
 data_url: ""
 train_url: ""
@@ -7,19 +7,19 @@ checkpoint_url: ""
 # Path for local
 run_distribute: False
 enable_profiling: False
-data_path: "./cache/train/RP2K_train.mindrecord"
+data_path: "./RP2K_rp2k_dataset/train/RP2K_train.mindrecord"
 output_path: "/cache/train"
-load_path: "/cache/checkpoint_path/"
-device_target: "Ascend"
-checkpoint_path: "./checkpoint/"
-checkpoint_file_path: ""
+load_path: "/cache/train/checkpoint"
+device_target: "GPU"
+checkpoint_path: "checkpoint"
+checkpoint_file_path: "/cache/train/checkpoint/resnet-85_10776.ckpt"
 
 # ==============================================================================
 # Training options
 optimizer: "Momentum"
 infer_label: ""
 class_num: 2388
-batch_size: 32
+batch_size: 8
 loss_scale: 1024
 momentum: 0.9
 weight_decay: 0.0001
@@ -40,8 +40,8 @@ boost_mode: "O2"
 net_name: "resnet18"
 dataset: "rp2k"
 device_num: 1
-pre_trained: ""
-run_eval: False
+pre_trained: "/cache/train/checkpoint"
+run_eval: True
 eval_dataset_path: "RP2K_rp2k_dataset/test/RP2K_test.mindrecord"
 parameter_server: False
 filter_weight: False
@@ -50,7 +50,7 @@ eval_start_epoch: 40
 eval_interval: 1
 enable_cache: False
 cache_session_id: ""
-mode_name: "GRAPH"
+mode_name: "PYNAIVE"
 conv_init: "XavierUniform"
 dense_init: "TruncatedNormal"
 train_image_size: 224

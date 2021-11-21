@@ -1,5 +1,5 @@
 # Builtin Configurations(DO NOT CHANGE THESE CONFIGURATIONS unless you know exactly what you are doing)
-enable_modelarts: False
+enable_modelarts: True
 # Url for modelarts
 data_url: ""
 train_url: ""
@@ -7,18 +7,18 @@ checkpoint_url: ""
 # Path for local
 run_distribute: False
 enable_profiling: False
-data_path: "/cache/data"
+data_path: "./RP2K_rp2k_dataset/train/RP2K_train.mindrecord"
 output_path: "/cache/train"
 load_path: "/cache/checkpoint_path/"
 device_target: "Ascend"
-checkpoint_path: "./checkpoint/"
+checkpoint_path: "checkpoint"
 checkpoint_file_path: ""
 
 # ==============================================================================
 # Training options
 optimizer: "Momentum"
 infer_label: ""
-class_num: 10
+class_num: 2388
 batch_size: 32
 loss_scale: 1024
 momentum: 0.9
@@ -35,13 +35,14 @@ lr_end: 0.00001
 lr_max: 0.1
 lars_epsilon: 0.0
 lars_coefficient: 0.001
+boost_mode: "O2"
 
-net_name: "resnet18"
-dataset: "cifar10"
+net_name: "resnet101"
+dataset: "rp2k"
 device_num: 1
 pre_trained: ""
 run_eval: False
-eval_dataset_path: ""
+eval_dataset_path: "./RP2K_rp2k_dataset/test/RP2K_test.mindrecord"
 parameter_server: False
 filter_weight: False
 save_best_ckpt: True
@@ -50,7 +51,6 @@ eval_interval: 1
 enable_cache: False
 cache_session_id: ""
 mode_name: "GRAPH"
-boost_mode: "O0"
 conv_init: "XavierUniform"
 dense_init: "TruncatedNormal"
 train_image_size: 224
@@ -60,10 +60,10 @@ eval_image_size: 224
 device_id: 0
 width: 224
 height: 224
-file_name: "resnet18"
+file_name: "resnet101"
 file_format: "MINDIR"
 ckpt_file: ""
-network_dataset: "resnet18_cifar10"
+network_dataset: "resnet101_rp2k"
 
 # Retrain options
 save_graphs: False
