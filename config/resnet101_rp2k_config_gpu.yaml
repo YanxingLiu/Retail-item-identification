@@ -1,5 +1,5 @@
 # Builtin Configurations(DO NOT CHANGE THESE CONFIGURATIONS unless you know exactly what you are doing)
-enable_modelarts: True
+enable_modelarts: False
 # Url for modelarts
 data_url: ""
 train_url: ""
@@ -10,7 +10,7 @@ enable_profiling: False
 data_path: "./RP2K_rp2k_dataset"
 output_path: "/cache/train"
 load_path: "/cache/checkpoint_path/"
-device_target: "Ascend"
+device_target: "GPU"
 checkpoint_path: "checkpoint"
 checkpoint_file_path: "/cache/train/checkpoint/best_acc.ckpt"
 

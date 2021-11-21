@@ -115,6 +115,8 @@ dmypy.json
 .pyre/
 
 #BDCI
+akg_build_tmp.key
+cuda_meta/
 RP2K_rp2k_dataset/
 RP2K_rp2k_dataset1/
 .idea/

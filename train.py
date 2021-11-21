@@ -210,7 +210,7 @@ def init_lr(step_size):
                         warmup_epochs=config.warmup_epochs, total_epochs=config.epoch_size, steps_per_epoch=step_size,
                         lr_decay_mode=config.lr_decay_mode)
         else:
-            lr = warmup_cosine_annealing_lr(config.lr, step_size, config.warmup_epochs, config.epoch_size,
+            lr = warmup_cosine_annealing_lr(config.lr_init, step_size, config.warmup_epochs, config.epoch_size,
                                             config.pretrain_epoch_size * step_size)
     return lr
 

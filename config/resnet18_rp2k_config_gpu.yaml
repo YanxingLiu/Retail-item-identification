@@ -12,7 +12,7 @@ output_path: "/cache/train"
 load_path: "/cache/train/checkpoint"
 device_target: "GPU"
 checkpoint_path: "checkpoint"
-checkpoint_file_path: "/cache/train/checkpoint/resnet-85_10776.ckpt"
+checkpoint_file_path: "/cache/train/checkpoint/best_acc.ckpt"
 
 # ==============================================================================
 # Training options

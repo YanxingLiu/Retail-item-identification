@@ -42,7 +42,7 @@ if config.net_name in ("resnet18", "resnet34", "resnet50", "resnet152"):
         if config.mode_name == "GRAPH":
             from src.dataset import create_dataset5 as create_dataset
         else:
-            from src.dataset import create_dataset_5 as create_dataset
+            from src.dataset import create_dataset5 as create_dataset
 elif config.net_name == "resnet101":
     from src.resnet import resnet101 as resnet
     from src.dataset import create_dataset5 as create_dataset
@@ -62,7 +62,7 @@ def eval_net():
         context.set_context(device_id=device_id)
 
     # create dataset
-    dataset = create_dataset(dataset_path=os.path.join(config.eval_dataset_path,'test/RP2K_test.mindrecord'), do_train=False, batch_size=config.batch_size,
+    dataset = create_dataset(dataset_path=os.path.join(config.eval_dataset_path, 'test/RP2K_test.mindrecord'), do_train=False, batch_size=config.batch_size,
                              eval_image_size=config.eval_image_size,
                              target=target)
 
