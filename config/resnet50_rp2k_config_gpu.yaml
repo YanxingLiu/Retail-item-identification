@@ -8,11 +8,11 @@ checkpoint_url: ""
 run_distribute: False
 enable_profiling: False
 data_path: "./RP2K_rp2k_dataset"
-output_path: "/cache/train"
-load_path: "/cache/checkpoint_path/"
+output_path: "./cache/train"
+load_path: "./cache/checkpoint_path/"
 device_target: "GPU"
 checkpoint_path: "checkpoint"
-checkpoint_file_path: "/cache/train/checkpoint/best_acc.ckpt"
+checkpoint_file_path: "./cache/train/checkpoint/best_acc.ckpt"
 
 # ==============================================================================
 # Training options
