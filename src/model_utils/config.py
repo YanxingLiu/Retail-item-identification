@@ -21,7 +21,7 @@ import argparse
 from pprint import pprint, pformat
 import yaml
 
-_config_path = "./config/resnet50_cifar10_config.yaml"
+_config_path = "./config/resnet50_rp2k_config_ascend.yaml"
 
 class Config:
     """

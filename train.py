@@ -7,7 +7,6 @@ import glob
 import os
 import numpy as np
 import argparse
-parser = argparse.ArgumentParser(description='test')
 
 
 from mindspore import context

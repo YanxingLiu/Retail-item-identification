@@ -7,7 +7,7 @@ checkpoint_url: ""
 # Path for local
 run_distribute: False
 enable_profiling: False
-data_path: "./RP2K_rp2k_dataset/train/RP2K_train.mindrecord"
+data_path: "./RP2K_rp2k_dataset"
 output_path: "/cache/train"
 load_path: "/cache/train/checkpoint"
 device_target: "GPU"
