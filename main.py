@@ -7,6 +7,9 @@ import datetime
 import glob
 import os
 import numpy as np
+import argparse
+parser = argparse.ArgumentParser(description='test')
+
 
 from mindspore import context
 from mindspore import Tensor
@@ -83,15 +86,15 @@ if config.net_name in ("resnet18", "resnet34", "resnet50", "resnet152"):
         from src.dataset import create_dataset5 as create_dataset
     else :
         if config.mode_name == "GRAPH":
-            from src.dataset import create_dataset2 as create_dataset
+            from src.dataset import create_dataset5 as create_dataset
         else:
-            from src.dataset import create_dataset_pynative as create_dataset
+            from src.dataset import create_dataset_5 as create_dataset
 elif config.net_name == "resnet101":
     from src.resnet import resnet101 as resnet
-    from src.dataset import create_dataset3 as create_dataset
+    from src.dataset import create_dataset5 as create_dataset
 else:
     from src.resnet import se_resnet50 as resnet
-    from src.dataset import create_dataset4 as create_dataset
+    from src.dataset import create_dataset5 as create_dataset
 
 
 def filter_checkpoint_parameter_by_list(origin_dict, param_filter):
@@ -244,7 +247,7 @@ def run_eval(target, model, ckpt_save_dir, cb):
     if config.run_eval:
         if config.eval_dataset_path is None or (not os.path.isdir(config.eval_dataset_path)):
             raise ValueError("{} is not a existing path.".format(config.eval_dataset_path))
-        eval_dataset = create_dataset(dataset_path=config.eval_dataset_path, do_train=False,
+        eval_dataset = create_dataset(dataset_path=os.path.join(config.data_url,'test/RP2K_test.mindrecord'), do_train=False,
                                       batch_size=config.batch_size, train_image_size=config.train_image_size,
                                       eval_image_size=config.eval_image_size,
                                       target=target, enable_cache=config.enable_cache,
@@ -306,7 +309,7 @@ def train_net():
     target = config.device_target
     set_parameter()
     # ckpt_param_dict = load_pre_trained_checkpoint()
-    dataset = create_dataset(dataset_path=config.data_path, do_train=True, repeat_num=1,
+    dataset = create_dataset(dataset_path=os.path.join(config.data_url,'train/RP2K_train.mindrecord'), do_train=True, repeat_num=1,
                              batch_size=config.batch_size, train_image_size=config.train_image_size,
                              eval_image_size=config.eval_image_size, target=target,
                              distribute=config.run_distribute)
@@ -334,7 +337,7 @@ def train_net():
         model = Model(net, loss_fn=loss, optimizer=opt, metrics=metrics, eval_network=dist_eval_network)
     else:
         model = Model(net, loss_fn=loss, optimizer=opt, loss_scale_manager=loss_scale, metrics=metrics,
-                      amp_level="O2", boost_level=config.boost_mode, keep_batchnorm_fp32=False,
+                      amp_level="O2", keep_batchnorm_fp32=False,
                       eval_network=dist_eval_network)
 
     if config.optimizer == "Thor" and config.dataset == "imagenet2012":
