@@ -23,8 +23,8 @@ batch_size: 32
 loss_scale: 1024
 momentum: 0.9
 weight_decay: 0.0001
-epoch_size: 90
-pretrain_epoch_size: 0
+epoch_size: 120
+pretrain_epoch_size: 90
 save_checkpoint: True
 save_checkpoint_epochs: 5
 keep_checkpoint_max: 10
@@ -40,7 +40,7 @@ boost_mode: "O2"
 net_name: "resnet50"
 dataset: "rp2k"
 device_num: 1
-pre_trained: ""
+pre_trained: "./checkpoint/best_acc.ckpt"
 run_eval: True
 eval_dataset_path: "./RP2K_rp2k_dataset"
 parameter_server: False

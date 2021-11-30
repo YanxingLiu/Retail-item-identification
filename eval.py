@@ -52,7 +52,9 @@ else:
 
 @moxing_wrapper()
 def eval_net():
-    """eval net"""
+    """
+    eval net
+    """
     target = config.device_target
 
     # init context

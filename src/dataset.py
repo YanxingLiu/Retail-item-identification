@@ -376,13 +376,24 @@ def create_dataset5(dataset_path, do_train, repeat_num=1, batch_size=32, train_i
     device_num, rank_id = _get_rank_info(distribute)
     ds.config.set_prefetch_size(64)  #预取数目
     data_set = ds.MindDataset(dataset_path)  #读取数据集
-    trans = [
+    if do_train:
+        trans = [
+                C.Decode(rgb=True),
+                C.Resize([train_image_size, train_image_size], ds.vision.Inter.BICUBIC),
+                C.RandomHorizontalFlip(prob=0.8),
+                C.Normalize([0.4914, 0.4822, 0.4465], [0.2023, 0.1994, 0.2010]),
+                C.Invert(),
+                C.HWC2CHW(),
+                C2.TypeCast(mstype.float32)
+        ]  #图片变换
+    else:
+        trans = [
             C.Decode(rgb=True),
             C.Resize([train_image_size, train_image_size], ds.vision.Inter.BICUBIC),
-            C.RandomHorizontalFlip(prob=0.5),
+            C.Normalize([0.4914, 0.4822, 0.4465], [0.2023, 0.1994, 0.2010]),
             C.HWC2CHW(),
             C2.TypeCast(mstype.float32)
-    ]  #图片变换
+        ]  # 图片变换
     type_cast_op = C2.TypeCast(mstype.int32)  #标签变换
     data_set = data_set.map(operations=trans, input_columns="data", num_parallel_workers=get_num_parallel_workers(12))
     # only enable cache for eval

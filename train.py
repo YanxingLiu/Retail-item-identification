@@ -1,13 +1,10 @@
 #!/usr/bin/env python
 # coding=utf-8
-import os
-import mindspore.dataset as ds
+
 import datetime
 import glob
 import os
 import numpy as np
-import argparse
-
 
 from mindspore import context
 from mindspore import Tensor
@@ -357,7 +354,7 @@ def train_net():
     run_eval(target, model, ckpt_save_dir, cb)
     # train model
     if config.net_name == "se-resnet50":
-        config.epoch_size = config.train_epoch_size
+        config.epoch_size = config.epoch_size
     dataset_sink_mode = (not config.parameter_server) and target != "CPU"
     config.pretrain_epoch_size = config.has_trained_epoch
     model.train(config.epoch_size - config.pretrain_epoch_size, dataset, callbacks=cb,
