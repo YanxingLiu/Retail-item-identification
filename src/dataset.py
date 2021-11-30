@@ -382,7 +382,6 @@ def create_dataset5(dataset_path, do_train, repeat_num=1, batch_size=32, train_i
                 C.Resize([train_image_size, train_image_size], ds.vision.Inter.BICUBIC),
                 C.RandomHorizontalFlip(prob=0.8),
                 C.Normalize([0.4914, 0.4822, 0.4465], [0.2023, 0.1994, 0.2010]),
-                C.Invert(),
                 C.HWC2CHW(),
                 C2.TypeCast(mstype.float32)
         ]  #图片变换
